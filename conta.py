@@ -24,8 +24,25 @@ class Conta:
 
     def transfere(self, valor, destino):
         self.saca(valor)
-        destino.deposita(valor)    
+        destino.deposita(valor)
 
+    # Métodos que somente retornam algo, GET = sempre tem retorno
+    def get_saldo(self):
+        return self.__saldo 
+
+    def get_titular(self):
+        return self.__titular
+    
+    #chamando "por debaixo dos panos"
+    @property
+    def limite(self):
+        return self.__limite
+    
+
+    # Métodos que podem receber mudanças = SET (não retorna algo/sempre muda)
+    @limite.setter
+    def limite(self, limite):
+        self.__limite = limite
 
 
     # Há a possibilidade de criar variaveis identicas, perdendo a referência do objeto, 
