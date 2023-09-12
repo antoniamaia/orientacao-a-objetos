@@ -20,13 +20,6 @@ class Programa:
     def dar_like(self):
         self._likes += 1
 
-    # Poderia ser como abaixo, utilizando polimorfismo? Sim
-    #
-    # def imprime(self):
-    #     print(f" {self._nome} - {self.ano} - {self._likes}")
-    #
-    # Mas também podemos utilizar os Dunder methods (métodos especiais) - Representar objetos textuais
-
     def __str__(self) -> str:
         return f" {self._nome} - {self.ano} - {self._likes} Likes"
 
@@ -38,9 +31,8 @@ class Filme(Programa):
     def retorna_cadastro_diferenciado(self):   
         pass
 
-    # Polimorfismo 
     def __str__(self):
-        return f" {self._nome} - {self.ano} - {self.duracao}min - {self._likes}"    
+        return f" {self._nome} - {self.ano} - {self.duracao}min - {self._likes} likes"    
 
 class Serie(Programa):
     def __init__(self, nome, ano, temporadas):
@@ -48,29 +40,52 @@ class Serie(Programa):
         self.temporadas = temporadas
 
     def __str__(self):
-        return f" {self._nome} - {self.ano} - {self.temporadas} temporadas - {self._likes}"
+        return f" {self._nome} - {self.ano} - {self.temporadas} temporadas - {self._likes} likes"
 
+# criando a classe Playlist, para poder criar diferentes listas 
+# -> atribuindo a list como herança para herdar funções (list) / tomar cuidado com as funções built ins
+
+class Playlist:
+    def __init__(self, nome, programas):
+        self.nome = nome
+        self._programas = programas
+
+    @property
+    def listagem(self):
+        return self._programas
+    
+    @property
+    def tamanho(self):
+        return len(self._programas)
+    
+    
 
 vingadores = Filme("vingadores - Guera Infinita", 2018, 160)
-vingadores.dar_like()
-print(f"{vingadores.nome} -{vingadores.ano} - {vingadores.duracao}- : {vingadores.likes}")
-
 atlanta = Serie("atlanta", 2018, 2)
+tmep = Filme("Todo mundo em pânico", 1999, 100)
+demolidor = Serie("demolidor", 2016, 5)
+
+vingadores.dar_like()
 atlanta.dar_like()
 atlanta.dar_like() 
-atlanta.dar_like() 
-print(f" {atlanta.nome} - {atlanta.ano} -  {atlanta.temporadas} : {atlanta.likes}")
+atlanta.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+demolidor.dar_like()
+demolidor.dar_like()
+demolidor.dar_like()
 
-#Herança -> classes filhas são do mesmo tipo que a classe mãe - objetos são da classe Programa
-# polimorfismo = como tem a mesma estrutura posso utilizar os dois tipos no for
 
-filmes_e_series = [vingadores, atlanta]
+filmes_e_series = [vingadores, atlanta, demolidor, tmep]
 
-# Poderia esrever assim? sim! mas podemos utilizar Polimorfismo!!
-# for programa in filmes_e_series:
-#     #verificação de atributo     |_____________________if ternário_____________________|  
-#     detalhes = programa.duracao if hasattr(programa, 'duracao') else programa.temporadas
-#     print(f" {programa.nome} - {programa.ano} -  D {detalhes} : {programa.likes}")
+playlist_fim_de_semana = Playlist('fim de semana', filmes_e_series)
 
-for programa in filmes_e_series:
+print(f'Tamanho da Playlist: {playlist_fim_de_semana.tamanho}')
+
+for programa in playlist_fim_de_semana.listagem:
     print(programa)
+
+# print(f'Tá ou Não Tá? {demolidor in playlist_fim_de_semana}')
+    
